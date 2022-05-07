@@ -1,3 +1,10 @@
 from django.contrib import admin
 
-# Register your models here.
+from .models import Client, Market, Service, Evaluation
+
+admin.site.register(Client)
+admin.site.register(Service)
+admin.site.register(Market)
+admin.site.register(Evaluation)
+
+
