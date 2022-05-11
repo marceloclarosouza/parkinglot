@@ -1,5 +1,6 @@
 from django.db import models
 from cpf_field.models import CPFField
+from datetime import datetime
 
 class Client(models.Model):
     first_name = models.CharField(max_length=50, null=False, blank=False)
@@ -17,17 +18,17 @@ class Service(models.Model):
     def __str__(self):
         return self.service
 
-class Market(models.Model):
+class Order(models.Model):
     service = models.ForeignKey(Service, on_delete=models.CASCADE)
     cpf = models.ForeignKey(Client, on_delete=models.CASCADE)
-    service_date = models.DateTimeField(null=False, blank=False)
+    service_date = models.DateTimeField(default=datetime.now, null=False, blank=False)
 
     def __str__(self):
         return str(self.service)
 
-class Evaluation(Market):
-    comments = models.CharField(max_length=200, null=False, blank=False)
+class Feedback(models.Model):
+    name = models.CharField(max_length=30, blank=True)
+    feedback = models.CharField(max_length=200, null=False, blank=False)
 
     def __str__(self):
-        return self.comments
-
+        return self.feedback
