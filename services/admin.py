@@ -17,7 +17,7 @@ class OrderAdmin(admin.ModelAdmin):
 
 class FeedbackAdmin(admin.ModelAdmin):
     model = Feedback
-    list_display = ('feedback', 'name')
+    list_display = ('feedback', 'name', 'feedback_date')
 
 
 admin.site.register(Client, ClientAdmin)
