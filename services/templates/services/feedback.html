@@ -1,4 +1,5 @@
 {% extends 'services/base.html' %}
+{% load static %}
 
 {% block title %}
     <h1>Estética Automotiva da Fatec</h1>
@@ -9,7 +10,7 @@
     {% if feed %}
     <ul>
         {% for f in feed %}
-            <li><a href="feedback">{{ f }}</a></li>
+            <li rel="stylesheet" type="text/css"><a href="{% static 'feedback/style.css' %}">{{ f }}</a></li>
         {% endfor %}      
     </ul>
     {% else %}
