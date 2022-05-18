@@ -22,6 +22,8 @@ class ServiceSerializer(serializers.ModelSerializer):
         fields = ('__all__')
 
 class OrderSerializer(serializers.ModelSerializer):
+    service = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
+    cpf = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
     service_date = serializers.DateTimeField(default=datetime.now)
 
     class Meta:

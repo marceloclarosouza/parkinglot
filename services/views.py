@@ -69,11 +69,111 @@ class FeedbackViews(APIView):
         serializer = FeedbackSerializer(item, data=request.data, partial=True)
         if serializer.is_valid():
             serializer.save()
-            return Response({'status': 'success', 'data': serializer.data})
+            return Response({'status': 'success', 'data': serializer.data}, status=status.HTTP_200_OK)
         else:
-            return Response({'status': 'error', 'data': serializer.errors})
+            return Response({'status': 'error', 'data': serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
 
     def delete(self, request, id=None):
         item = get_object_or_404(Feedback, id=id)
+        item.delete()
+        return Response({'status': 'success', 'data': 'Item deleted. Good luck :-)'})
+
+class ClientViews(APIView):
+    def post(self, request):
+        serializer = ClientSerializer(data=request.data)
+        if serializer:
+            serializer.is_valid()
+            serializer.save()
+            return Response({'status': 'success', 'data':serializer.data}, status=status.HTTP_200_OK)
+        else:
+            return Response({'status': 'error', 'data': serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
+
+    def get(self, request, id=None):
+        if id:
+            item = Client.objects.get(id=id)
+            serializer = ClientSerializer(item)
+            return Response ({'status': 'success', 'data':serializer.data}, status=status.HTTP_200_OK)
+        
+        items = Client.objects.all()
+        serializer = ClientSerializer(items, many=True)
+        return Response({'status': 'success', 'data': serializer.data}, status=status.HTTP_200_OK)
+
+    def patch(self, request, id=None):
+        item = Client.objects.get(id=id)
+        serializer = ClientSerializer(item, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response({'status': 'success', 'data': serializer.data}, status=status.HTTP_200_OK)
+        else:
+            return Response({'status': 'error', 'data': serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
+    
+    def delete(self, request, id=None):
+        item = get_object_or_404(Client, id=id)
+        item.delete()
+        return Response({'status': 'success', 'data': 'Item deleted. Good luck :-)'})
+
+class ServiceViews(APIView):
+    def post(self, request):
+        serializer = ServiceSerializer(data=request.data)
+        if serializer:
+            serializer.save()
+            return Response({'status': 'success', 'data':serializer.data}, status=status.HTTP_200_OK)
+        else:
+            return Response({'status': 'error', 'data': serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
+
+    def get(self, request, id=None):
+        if id:
+            item = Service.objects.get(id=id)
+            serializer = ServiceSerializer(item)
+            return Response ({'status': 'success', 'data':serializer.data}, status=status.HTTP_200_OK)
+        
+        items = Service.objects.all()
+        serializer = ServiceSerializer(items, many=True)
+        return Response({'status': 'success', 'data': serializer.data}, status=status.HTTP_200_OK)
+
+    def patch(self, request, id=None):
+        item = Service.objects.get(id=id)
+        serializer = ServiceSerializer(item, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response({'status': 'success', 'data': serializer.data}, status=status.HTTP_200_OK)
+        else:
+            return Response({'status': 'error', 'data': serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
+    
+    def delete(self, request, id=None):
+        item = get_object_or_404(Service, id=id)
+        item.delete()
+        return Response({'status': 'success', 'data': 'Item deleted. Good luck :-)'})
+
+class OrderViews(APIView):
+    def post(self, request):
+        serializer = OrderSerializer(data=request.data)
+        if serializer:
+            serializer.save()
+            return Response({'status': 'success', 'data':serializer.data}, status=status.HTTP_200_OK)
+        else:
+            return Response({'status': 'error', 'data': serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
+
+    def get(self, request, id=None):
+        if id:
+            item = Order.objects.get(id=id)
+            serializer = OrderSerializer(item)
+            return Response ({'status': 'success', 'data':serializer.data}, status=status.HTTP_200_OK)
+        
+        items = Order.objects.all()
+        serializer = OrderSerializer(items, many=True)
+        return Response({'status': 'success', 'data': serializer.data}, status=status.HTTP_200_OK)
+
+    def patch(self, request, id=None):
+        item = Order.objects.get(id=id)
+        serializer = OrderSerializer(item, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response({'status': 'success', 'data': serializer.data}, status=status.HTTP_200_OK)
+        else:
+            return Response({'status': 'error', 'data': serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
+    
+    def delete(self, request, id=None):
+        item = get_object_or_404(Order, id=id)
         item.delete()
         return Response({'status': 'success', 'data': 'Item deleted. Good luck :-)'})
