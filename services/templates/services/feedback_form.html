@@ -1,0 +1,11 @@
+{% extends 'services/base.html' %}
+
+{% block title %}Feedback Form{% endblock %}
+
+{% block body %}
+<form action="{% url 'services:feedback' %}" method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" />
+</form>
+{% endblock %}

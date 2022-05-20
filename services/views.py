@@ -1,49 +1,27 @@
-# from django.shortcuts import render
-# from django.http import HttpResponse
-# from django.views.generic import ListView
-
-# from django.template import loader
-# from .models import Feedback, Service
-
-# class IndexView(ListView):
-#     template_name = 'services/index.html'
-
-#     def index(request):
-#         return HttpResponse("Wellcome to the Ace Parking Lot")
-
-# class FeedbackView(ListView):
-    
-#     model = Feedback
-#     template_name = 'services/feedback.html'
-#     context_obj_name = 'feed'
-    
-#     def get_queryset(request):
-        
-#         feed = Feedback.objects.all()
-       
-
-#         return render(request, 'services/feedback.html', context )
-
-
-
-# class ServicesView(ListView):
-#     model = Service
-#     template_name = 'services/services.html'
-
-#     def get_services(request):
-#         service = Service.objects.all()
-#         context = {'service': service}
-        
-#         return render(request, 'services/services.html', context)
-
-
-
-from django.shortcuts import get_object_or_404
+from django import forms
+from django.shortcuts import get_object_or_404, render
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from .serializers import ClientSerializer, OrderSerializer, ServiceSerializer, FeedbackSerializer
-from .models import Client, Order, Service, Feedback
+from .serializers import ClientSerializer, OrderSerializer, ServicesSerializer, FeedbackSerializer
+from .models import Client, Order, Services, Feedback
+
+
+class FeedbackForm(forms.ModelForm):
+    class Meta:
+        model = Feedback
+        exclude = []
+    
+    def feedback_form(request):
+        if request.method =='POST':
+            form = FeedbackForm(request.POST)
+
+            if form.is_valid():
+                form.save()
+                return render(request, 'services/thanks.html')
+        else:
+            form=FeedbackForm()
+        return render(request, 'services/feedback_form.html', {'services':form})
 
 class FeedbackViews(APIView):
     def post(self, request):
@@ -56,17 +34,17 @@ class FeedbackViews(APIView):
 
     def get(self, request, id=None):
         if id:
-            item = Feedback.objects.get(id=id)
-            serializer = FeedbackSerializer(item)
+            feedback = Feedback.objects.get(id=id)
+            serializer = FeedbackSerializer(feedback)
             return Response ({'status': 'success', 'data':serializer.data}, status=status.HTTP_200_OK)
         
-        items = Feedback.objects.all()
-        serializer = FeedbackSerializer(items, many=True)
+        feedbacks = Feedback.objects.all()
+        serializer = FeedbackSerializer(feedbacks, many=True)
         return Response({'status': 'success', 'data': serializer.data}, status=status.HTTP_200_OK)
 
     def patch(self, request, id=None):
-        item = Feedback.objects.get(id=id)
-        serializer = FeedbackSerializer(item, data=request.data, partial=True)
+        feedback = Feedback.objects.get(id=id)
+        serializer = FeedbackSerializer(feedback, data=request.data, partial=True)
         if serializer.is_valid():
             serializer.save()
             return Response({'status': 'success', 'data': serializer.data}, status=status.HTTP_200_OK)
@@ -74,8 +52,8 @@ class FeedbackViews(APIView):
             return Response({'status': 'error', 'data': serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
 
     def delete(self, request, id=None):
-        item = get_object_or_404(Feedback, id=id)
-        item.delete()
+        feedback = get_object_or_404(Feedback, id=id)
+        feedback.delete()
         return Response({'status': 'success', 'data': 'Item deleted. Good luck :-)'})
 
 class ClientViews(APIView):
@@ -112,9 +90,9 @@ class ClientViews(APIView):
         item.delete()
         return Response({'status': 'success', 'data': 'Item deleted. Good luck :-)'})
 
-class ServiceViews(APIView):
+class ServicesViews(APIView):
     def post(self, request):
-        serializer = ServiceSerializer(data=request.data)
+        serializer = ServicesSerializer(data=request.data)
         if serializer:
             serializer.save()
             return Response({'status': 'success', 'data':serializer.data}, status=status.HTTP_200_OK)
@@ -123,17 +101,17 @@ class ServiceViews(APIView):
 
     def get(self, request, id=None):
         if id:
-            item = Service.objects.get(id=id)
-            serializer = ServiceSerializer(item)
+            item = Services.objects.get(id=id)
+            serializer = ServicesSerializer(item)
             return Response ({'status': 'success', 'data':serializer.data}, status=status.HTTP_200_OK)
         
-        items = Service.objects.all()
-        serializer = ServiceSerializer(items, many=True)
+        items = Services.objects.all()
+        serializer = ServicesSerializer(items, many=True)
         return Response({'status': 'success', 'data': serializer.data}, status=status.HTTP_200_OK)
 
     def patch(self, request, id=None):
-        item = Service.objects.get(id=id)
-        serializer = ServiceSerializer(item, data=request.data, partial=True)
+        item = Services.objects.get(id=id)
+        serializer = ServicesSerializer(item, data=request.data, partial=True)
         if serializer.is_valid():
             serializer.save()
             return Response({'status': 'success', 'data': serializer.data}, status=status.HTTP_200_OK)
@@ -141,7 +119,7 @@ class ServiceViews(APIView):
             return Response({'status': 'error', 'data': serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
     
     def delete(self, request, id=None):
-        item = get_object_or_404(Service, id=id)
+        item = get_object_or_404(Services, id=id)
         item.delete()
         return Response({'status': 'success', 'data': 'Item deleted. Good luck :-)'})
 
