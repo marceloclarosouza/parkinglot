@@ -1,13 +1,13 @@
 from django.urls import path
 # from django.conf.urls import url
-from .views import ClientViews, FeedbackViews, OrderViews, ServicesViews, FeedbackForm
+from .views import ClientViews, FeedbackViews, OrderViews, ServicesViews
 
 from . import views
 
 app_name = 'services'
 
 urlpatterns = [
-    path('feedback/', FeedbackForm.feedback_form, name='feedback'),
+    path('feedback/', views.feedback_form, name='feedback'),
     path('feedback-api/', FeedbackViews.as_view()),
     path('feedback-api/<int:id>', FeedbackViews.as_view()),
     path('client-api/', ClientViews.as_view()),

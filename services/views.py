@@ -1,27 +1,22 @@
-from django import forms
 from django.shortcuts import get_object_or_404, render
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from .serializers import ClientSerializer, OrderSerializer, ServicesSerializer, FeedbackSerializer
 from .models import Client, Order, Services, Feedback
+from .forms import FeedbackForm
 
 
-class FeedbackForm(forms.ModelForm):
-    class Meta:
-        model = Feedback
-        exclude = []
-    
-    def feedback_form(request):
-        if request.method =='POST':
-            form = FeedbackForm(request.POST)
+def feedback_form(request):
+    if request.method =='POST':
+        form = FeedbackForm(request.POST)
 
-            if form.is_valid():
-                form.save()
-                return render(request, 'services/thanks.html')
-        else:
-            form=FeedbackForm()
-        return render(request, 'services/feedback_form.html', {'services':form})
+        if form.is_valid():
+            form.save()
+            return render(request, 'services/thanks.html')
+    else:
+        form=FeedbackForm()
+        return render(request, 'services/feedback_form.html', {'form':form})
 
 class FeedbackViews(APIView):
     def post(self, request):
