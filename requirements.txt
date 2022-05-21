@@ -2,3 +2,4 @@ python==10
 django==4.0.4
 django-cpf==0.1.0
 djangorestframework==3.13.1
+django-import-export==2.8.0

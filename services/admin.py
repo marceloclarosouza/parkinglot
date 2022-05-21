@@ -1,13 +1,13 @@
 from django.contrib import admin
+from import_export.admin import ImportExportMixin
 
 from .models import Client, Feedback, Order, Services
-
 
 class ClientAdmin(admin.ModelAdmin):
     list_display = ('first_name', 'last_name', 'cpf', 'email')
     list_filter = ('cpf', 'email')
     search_fields = ('cpf', 'email')
-    
+        
     class Meta:
         model = Client
     
@@ -28,15 +28,14 @@ class OrderAdmin(admin.ModelAdmin):
 
     class Meta:
         model = Order
-    
 
-class FeedbackAdmin(admin.ModelAdmin):
+class FeedbackAdmin(ImportExportMixin, admin.ModelAdmin):
     list_display = ('service','feedback', 'name', 'feedback_date')
     list_filter = ('feedback_date',)
-    search_field = ('service__name', )
+    search_field = ('service__name', )    
 
     class Meta:
-        model = Feedback
+        model = Feedback        
     
 
 admin.site.register(Client, ClientAdmin)
