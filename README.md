@@ -20,20 +20,20 @@ python manage.py runserver
 ## On the browser
 http://127.0.0.1:8000/admin/ --Admin pannel
 
-http://127.0.0.1:8000/feedback/  --Feedback form
+http://127.0.0.1:8000/feedback/ --Feedback form
 
-http://127.0.0.1:8000/feedback-api/
+http://127.0.0.1:8000/feedback-api/ --GET
 
-http://127.0.0.1:8000/feedback-api/<int:id>/
+http://127.0.0.1:8000/feedback-api/id/ --POST, PATCH, DELETE
 
-http://127.0.0.1:8000/client-api/
+http://127.0.0.1:8000/client-api/ --GET
 
-http://127.0.0.1:8000/client-api/<int:id>/
+http://127.0.0.1:8000/client-api/id/ --POST, PATCH, DELETE
 
-http://127.0.0.1:8000/service-api/
+http://127.0.0.1:8000/service-api/ --GET
 
-http://127.0.0.1:8000/service-api/<int:id>/
+http://127.0.0.1:8000/service-api/id/ --POST, PATCH, DELETE
 
-http://127.0.0.1:8000/order-api/
+http://127.0.0.1:8000/order-api/ --GET
 
-http://127.0.0.1:8000/order-api/<int:id>/
+http://127.0.0.1:8000/order-api/id/ --POST, PATCH, DELETE
