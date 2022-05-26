@@ -3,5 +3,60 @@ li a {
 }
 
 body {
-    background: white url("images/background.gif") no-repeat;
+    background: rgb(26, 80, 132) url("images/background.gif") no-repeat;
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    color: rgb(26, 80, 132);
+    margin-top: 5vh;
+    margin-bottom: 7vh;
+    text-align: center;
+}
+
+input{
+    border-radius: 4px;
+    width: 97%;
+    padding: 1.2vh;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 3vh;
+    display: flex;
+    align-items: stretch;
+}
+
+.container{
+    width: 60vh;
+    height: 80vh;
+    background-color: #ffffff;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 9vh;
+    margin-bottom: auto;
+    box-shadow: 0 0 2em rgb(4, 33, 60);
+    border-radius: 20px;
+    padding: 20px 30px;
+    text-align: start;
+}
+
+.container2{
+    width: 60vh;
+    height: 60vh;
+    background-color: #ffffff;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 15vh;
+    margin-bottom: auto;
+    box-shadow: 0 0 2em rgb(4, 33, 60);
+    border-radius: 20px;
+    padding: 20px 30px;
+    text-align: center;
+}
+
+.thanks{
+    color: rgb(26, 80, 132);
+    margin-top: 20vh;
+    margin-bottom: 7vh;
+    text-align: center;
 }
